@@ -104,7 +104,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://pd4r37ysv.bkt.clouddn.com/lets-encrypt.png">
 <meta property="og:image" content="http://pd4r37ysv.bkt.clouddn.com/Certbot.jpg">
-<meta property="og:updated_time" content="2018-08-08T09:05:41.331Z">
+<meta property="og:updated_time" content="2018-08-08T09:22:19.098Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="巧用Cerbot，快速部署Let’s Encrypt提供的免费SSL证书">
 <meta name="twitter:description" content="简介&amp;emsp;&amp;emsp;随着 Chrome 68 的更新，它将会在地址栏标示 Http 地址为不安全，一时间众多外贸站纷纷开始为自己的网站域名配置 Https 访问。舍得花钱的，可以购买阿里云、腾讯云等付费SSL证书。如果不愿意花钱，也可以有众多免费 SSL 证书能够使用。例如大名鼎鼎的 Let’s Encrypt、CloudFlare SSL，以及阿里云的免费证书。今天为大家分享一下，如何利">
@@ -347,7 +347,7 @@
  --webroot -w /home/wwwroot/www.youdomain.com -d www.youdomain.com
 
 <span class="token comment" spellcheck="true">#生成成功会有如下提示：</span>
-<span class="token string">''</span><span class="token string">'IMPORTANT NOTES:
+<span class="token string">'IMPORTANT NOTES:
 - Congratulations! Your certificate and chain have been saved at
 /etc/letsencrypt/live/www.vpser.net/fullchain.pem. Your cert will
 expire on 2016-10-01. To obtain a new or tweaked version of this
@@ -356,14 +356,14 @@ non-interactively renew *all* of your certificates, run
 "certbot-auto renew"
 - If you like Certbot, please consider supporting our work by:
 
-Donating to ISRG / Let'</span>s Encrypt: https://letsencrypt.org/donate
-Donating to EFF: https://eff.org/donate-le<span class="token string">''</span><span class="token string">'
+Donating to ISRG / Let\'s Encrypt: https://letsencrypt.org/donate
+Donating to EFF: https://eff.org/donate-le\''</span>
 
-#证书续期
+<span class="token comment" spellcheck="true">#证书续期</span>
 ./certbot-auto renew --dry-run
 
-#或者配置cron任务定时更新
-0 0,12 * * * python -c '</span><span class="token function">import</span> random<span class="token punctuation">;</span> <span class="token function">import</span> <span class="token function">time</span><span class="token punctuation">;</span> time.sleep<span class="token punctuation">(</span>random.random<span class="token punctuation">(</span><span class="token punctuation">)</span> * 3600<span class="token punctuation">)</span>' \
+<span class="token comment" spellcheck="true">#或者配置cron任务定时更新</span>
+0 0,12 * * * python -c <span class="token string">'import random; import time; time.sleep(random.random() * 3600)'</span> \
  <span class="token operator">&amp;&amp;</span> ./path/to/certbot-auto renew 
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>&emsp;&emsp;随着人们对隐私安全的关注越来越高，Https 加密访问逐渐成为互联网的主流。未来 Http 访问将会成为历史，被 Https 所取代。因此请及时为自己的网站配置 SSL 证书，尤其是企业网站。Cerbot的诞生，极大的便利了服务器的运营人员，让越来越多的网站运营者能够享受到免费的互联网资源。感谢那些提供免费资源的机构，极大的方便了众多小的网站主，为互联网的集体进步做出了重大的贡献。</p>
