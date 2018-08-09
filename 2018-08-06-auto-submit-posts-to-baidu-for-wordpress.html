@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Flynn&#39;s Words">
 <meta property="og:description" content="简介&amp;emsp;&amp;emsp;自动推送文章链接到百度对于百度优化是很重要的功能，能够加快文章的收录，有利于网站的排名的提升。网上有很多WordPress相关的插件可以实现该功能，但使用插件有一个弊端，会影响网站的加载速度。如果利用WordPress内置的函数来实现，不仅可以降低安装插件带来的影响，也能够更灵活的实现功能。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-06T05:49:26.569Z">
+<meta property="og:updated_time" content="2018-08-09T01:56:18.663Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单几步，实现WordPress自动提交文章到百度功能">
 <meta name="twitter:description" content="简介&amp;emsp;&amp;emsp;自动推送文章链接到百度对于百度优化是很重要的功能，能够加快文章的收录，有利于网站的排名的提升。网上有很多WordPress相关的插件可以实现该功能，但使用插件有一个弊端，会影响网站的加载速度。如果利用WordPress内置的函数来实现，不仅可以降低安装插件带来的影响，也能够更灵活的实现功能。">
@@ -332,56 +332,60 @@
 
       
         <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>&emsp;&emsp;自动推送文章链接到百度对于百度优化是很重要的功能，能够加快文章的收录，有利于网站的排名的提升。网上有很多<a href="https://cn.wordpress.org" target="_blank" rel="noopener">WordPress</a>相关的插件可以实现该功能，但使用插件有一个弊端，会影响网站的加载速度。如果利用WordPress内置的函数来实现，不仅可以降低安装插件带来的影响，也能够更灵活的实现功能。<a id="more"></a></p>
-<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>&emsp;&emsp;<a href="https://developer.wordpress.org/reference/functions/add_action/" target="_blank" rel="noopener">add_action</a>是WordPress内置的函数，它有一系列动作接口，可以实现当WordPress执行某种动作时就调用指定的函数。百度自动提交功能通过调用publish_post动作接口，当发布文章的时候就会执行指定的函数将文章链接提交到百度接口。<br><pre><code>&#x2F;*
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>&emsp;&emsp;<a href="https://developer.wordpress.org/reference/functions/add_action/" target="_blank" rel="noopener">add_action</a>是WordPress内置的函数，它有一系列动作接口，可以实现当WordPress执行某种动作时就调用指定的函数。百度自动提交功能通过调用publish_post动作接口，当发布文章的时候就会执行指定的函数将文章链接提交到百度接口。</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token comment" spellcheck="true">/*
 add_action( string $tag, callable $function_to_add, int $priority = 10, int $accepted_args = 1 );
-具体的函数使用请看这里:https:&#x2F;&#x2F;developer.wordpress.org&#x2F;reference&#x2F;functions&#x2F;add_action&#x2F;
-*&#x2F;
-add_action( &#39;publish_post&#39;, &#39;post_published_notification&#39;, 10, 2 );&#x2F;&#x2F;添加在发布文章时的活动</code></pre></p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>&emsp;&emsp;将如下代码复制到WordPress主题内的functions.php文件内即可实现对应的功能。<br><pre><code>&#x2F;&#x2F;该函数可以实现自动提交文章到百度站长工具
-if(!function_exists(&#39;Baidu_Submit&#39;)){
-    function Baidu_Submit($post_ID) {
-        $WEB_TOKEN  = &#39;xxxxxxxxxx&#39;;  &#x2F;&#x2F;这里请换成你的网站的百度主动推送的token值
-        $WEB_DOMAIN = get_option(&#39;home&#39;);
+具体的函数使用请看这里:https://developer.wordpress.org/reference/functions/add_action/
+*/</span>
+<span class="token function">add_action</span><span class="token punctuation">(</span> <span class="token string">'publish_post'</span><span class="token punctuation">,</span> <span class="token string">'post_published_notification'</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">2</span> <span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment" spellcheck="true">//添加在发布文章时的活动</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>&emsp;&emsp;将如下代码复制到WordPress主题内的functions.php文件内即可实现对应的功能。</p>
+<pre class="line-numbers language-php"><code class="language-php"><span class="token comment" spellcheck="true">//该函数可以实现自动提交文章到百度站长工具</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">function_exists</span><span class="token punctuation">(</span><span class="token string">'Baidu_Submit'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">function</span> <span class="token function">Baidu_Submit</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token variable">$WEB_TOKEN</span>  <span class="token operator">=</span> <span class="token string">'xxxxxxxxxx'</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//这里请换成你的网站的百度主动推送的token值</span>
+        <span class="token variable">$WEB_DOMAIN</span> <span class="token operator">=</span> <span class="token function">get_option</span><span class="token punctuation">(</span><span class="token string">'home'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        &#x2F;&#x2F;已成功推送的文章不再推送
-        if(get_post_meta($post_ID,&#39;Baidusubmit&#39;,true) == 1) return;
-        $url = get_permalink($post_ID);
-        $api = &#39;http:&#x2F;&#x2F;data.zz.baidu.com&#x2F;urls?site=&#39;.$WEB_DOMAIN.&#39;&amp;token=&#39;.$WEB_TOKEN;
-        $request = new WP_Http;
-        $result = $request-&gt;request( $api , array( &#39;method&#39; =&gt; &#39;POST&#39;, \
-        &#39;body&#39; =&gt; $url , &#39;headers&#39; =&gt; &#39;Content-Type: text&#x2F;plain&#39;) );
-        $result = json_decode($result[&#39;body&#39;],true);
+        <span class="token comment" spellcheck="true">//已成功推送的文章不再推送</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">get_post_meta</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">,</span><span class="token string">'Baidusubmit'</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token variable">$url</span> <span class="token operator">=</span> <span class="token function">get_permalink</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$api</span> <span class="token operator">=</span> 'http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//data.zz.baidu.com/urls?site='.$WEB_DOMAIN.'&amp;token='.$WEB_TOKEN;</span>
+        <span class="token variable">$request</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WP_Http</span><span class="token punctuation">;</span>
+        <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">request</span><span class="token punctuation">(</span> <span class="token variable">$api</span> <span class="token punctuation">,</span> <span class="token keyword">array</span><span class="token punctuation">(</span> <span class="token string">'method'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'POST'</span><span class="token punctuation">,</span> \
+        <span class="token string">'body'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token variable">$url</span> <span class="token punctuation">,</span> <span class="token string">'headers'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'Content-Type: text/plain'</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token function">json_decode</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">[</span><span class="token string">'body'</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        &#x2F;&#x2F;如果推送成功则在文章新增自定义栏目Baidusubmit，值为1
-        if (array_key_exists(&#39;success&#39;,$result)) {
-            add_post_meta($post_ID, &#39;Baidusubmit&#39;, 1, true);
-        }
-    }
-    add_action(&#39;publish_post&#39;, &#39;Baidu_Submit&#39;, 0);
-}
+        <span class="token comment" spellcheck="true">//如果推送成功则在文章新增自定义栏目Baidusubmit，值为1</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">array_key_exists</span><span class="token punctuation">(</span><span class="token string">'success'</span><span class="token punctuation">,</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">add_post_meta</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">,</span> <span class="token string">'Baidusubmit'</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">add_action</span><span class="token punctuation">(</span><span class="token string">'publish_post'</span><span class="token punctuation">,</span> <span class="token string">'Baidu_Submit'</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-&#x2F;&#x2F;该函数可以实现自动提交文章到百度熊掌号
-if(!function_exists(&#39;Baidu_Xiongzhang_Submit&#39;)){
-    function Baidu_Xiongzhang_Submit($post_ID) {
+<span class="token comment" spellcheck="true">//该函数可以实现自动提交文章到百度熊掌号</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">function_exists</span><span class="token punctuation">(</span><span class="token string">'Baidu_Xiongzhang_Submit'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    <span class="token keyword">function</span> <span class="token function">Baidu_Xiongzhang_Submit</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
-        &#x2F;&#x2F;这里请换成你的百度推送API地址
-        $api = &#39;http:&#x2F;&#x2F;data.zz.baidu.com&#x2F;urls?appid=1607581342920860&amp;token=uVyHl0SdjruU7HJI&amp;type=realtime&#39;;
+        <span class="token comment" spellcheck="true">//这里请换成你的百度推送API地址</span>
+        <span class="token variable">$api</span> <span class="token operator">=</span> 'http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//data.zz.baidu.com/urls?appid=yourappid0&amp;token=yourtoken&amp;type=realtime';</span>
 
-        &#x2F;&#x2F;已成功推送的文章不再推送
-        if(get_post_meta($post_ID,&#39;BaiduXionggzhangsubmit&#39;,true) == 1) return;
-        $url = get_permalink($post_ID);
-        $request = new WP_Http;
-        $result = $request-&gt;request( $api , array( &#39;method&#39; =&gt; &#39;POST&#39;, \
-        &#39;body&#39; =&gt; $url , &#39;headers&#39; =&gt; &#39;Content-Type: text&#x2F;plain&#39;) );
-        $result = json_decode($result[&#39;body&#39;],true);
+        <span class="token comment" spellcheck="true">//已成功推送的文章不再推送</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">get_post_meta</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">,</span><span class="token string">'BaiduXionggzhangsubmit'</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token variable">$url</span> <span class="token operator">=</span> <span class="token function">get_permalink</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$request</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">WP_Http</span><span class="token punctuation">;</span>
+        <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token variable">$request</span><span class="token operator">-</span><span class="token operator">></span><span class="token function">request</span><span class="token punctuation">(</span> <span class="token variable">$api</span> <span class="token punctuation">,</span> <span class="token keyword">array</span><span class="token punctuation">(</span> <span class="token string">'method'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'POST'</span><span class="token punctuation">,</span> \
+        <span class="token string">'body'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token variable">$url</span> <span class="token punctuation">,</span> <span class="token string">'headers'</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token string">'Content-Type: text/plain'</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token variable">$result</span> <span class="token operator">=</span> <span class="token function">json_decode</span><span class="token punctuation">(</span><span class="token variable">$result</span><span class="token punctuation">[</span><span class="token string">'body'</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        &#x2F;&#x2F;如果推送成功则在文章新增自定义栏目BaiduXionggzhangsubmit，值为1
-        if (array_key_exists(&#39;success_realtime&#39;,$result)) {
-            add_post_meta($post_ID, &#39;BaiduXionggzhangsubmit&#39;, 1, true);
-        }
-    }
-    add_action(&#39;publish_post&#39;, &#39;Baidu_Xiongzhang_Submit&#39;, 0);
-}</code></pre></p>
+        <span class="token comment" spellcheck="true">//如果推送成功则在文章新增自定义栏目BaiduXionggzhangsubmit，值为1</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">array_key_exists</span><span class="token punctuation">(</span><span class="token string">'success_realtime'</span><span class="token punctuation">,</span><span class="token variable">$result</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token function">add_post_meta</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">,</span> <span class="token string">'BaiduXionggzhangsubmit'</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token function">add_action</span><span class="token punctuation">(</span><span class="token string">'publish_post'</span><span class="token punctuation">,</span> <span class="token string">'Baidu_Xiongzhang_Submit'</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>&emsp;&emsp;WordPress内置API功能非常强大，能够自定义实现各种需求。当你对于自己的网站不满意，想要定制化自己需求的时候，不妨阅读一下<a href="https://developer.wordpress.org/reference/" target="_blank" rel="noopener">WordPress官方文档</a>，查查相关的API，以简单的函数替代插件更灵活的实现需要的功能。</p>
 
       
