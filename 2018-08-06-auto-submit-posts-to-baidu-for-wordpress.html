@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Flynn&#39;s Words">
 <meta property="og:description" content="简介&amp;emsp;&amp;emsp;自动推送文章链接到百度对于百度优化是很重要的功能，能够加快文章的收录，有利于网站的排名的提升。网上有很多WordPress相关的插件可以实现该功能，但使用插件有一个弊端，会影响网站的加载速度。如果利用WordPress内置的函数来实现，不仅可以降低安装插件带来的影响，也能够更灵活的实现功能。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-09T01:56:18.663Z">
+<meta property="og:updated_time" content="2018-08-09T02:05:54.127Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单几步，实现WordPress自动提交文章到百度功能">
 <meta name="twitter:description" content="简介&amp;emsp;&amp;emsp;自动推送文章链接到百度对于百度优化是很重要的功能，能够加快文章的收录，有利于网站的排名的提升。网上有很多WordPress相关的插件可以实现该功能，但使用插件有一个弊端，会影响网站的加载速度。如果利用WordPress内置的函数来实现，不仅可以降低安装插件带来的影响，也能够更灵活的实现功能。">
@@ -368,7 +368,7 @@ add_action( string $tag, callable $function_to_add, int $priority = 10, int $acc
     <span class="token keyword">function</span> <span class="token function">Baidu_Xiongzhang_Submit</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
         <span class="token comment" spellcheck="true">//这里请换成你的百度推送API地址</span>
-        <span class="token variable">$api</span> <span class="token operator">=</span> 'http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//data.zz.baidu.com/urls?appid=yourappid0&amp;token=yourtoken&amp;type=realtime';</span>
+        <span class="token variable">$api</span> <span class="token operator">=</span> 'http<span class="token punctuation">:</span><span class="token comment" spellcheck="true">//data.zz.baidu.com/urls?appid=your-appid&amp;token=your-token&amp;type=realtime';</span>
 
         <span class="token comment" spellcheck="true">//已成功推送的文章不再推送</span>
         <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">get_post_meta</span><span class="token punctuation">(</span><span class="token variable">$post_ID</span><span class="token punctuation">,</span><span class="token string">'BaiduXionggzhangsubmit'</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
